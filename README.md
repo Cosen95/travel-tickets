@@ -74,3 +74,45 @@ class ErrorBoundary extends React.Component {
   }
 }
 ```
+
+### React.PureComponent和React.memo
+* PureComponent
+> React.PureComponent 和 React.Component类似，都是定义一个组件类。不同是React.Component没有实现shouldComponentUpdate()，而 React.PureComponent通过props和state的浅比较实现了。
+```
+class Welcome extends React.PureComponent {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+```
+* memo
+> React.memo是一个高阶组件，类似于React.PureComponent，不同于React.memo是function组件，React.PureComponent是class组件。
+```
+const MyComponent = React.memo(props => {
+  /* render using props */
+  return (
+
+  );
+});
+```
+这种方式依然是一种对象的浅比较，有复杂对象时无法render。在React.memo中可以自定义其比较方法的实现。
+```
+import React from "react";
+
+function Child({seconds}){
+    console.log('I am rendering');
+    return (
+        <div>I am update every {seconds} seconds</div>
+    )
+};
+
+function areEqual(prevProps, nextProps) {
+    if(prevProps.seconds===nextProps.seconds){
+        return true
+    }else {
+        return false
+    }
+
+}
+export default React.memo(Child,areEqual)
+```
