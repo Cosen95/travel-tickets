@@ -17,10 +17,15 @@ const MyContext = React.createContext(defaultValue);
 创建一个 Context 对象。当 React 渲染一个订阅了这个 Context 对象的组件，这个组件会从组件树中离自身最近的那个匹配的 Provider 中读取到当前的 context 值。
 
 - Context.Provider
+
   每个 Context 对象都会返回一个 Provider React 组件，它允许消费组件订阅 context 的变化。
+
 - Context.Consumer
+
   React 组件也可以订阅到 context 变更。这能让你在函数式组件中完成订阅 context。这个函数接收当前的 context 值，返回一个 React 节点。
+
 - Class.contextType
+
   挂载在 class 上的 contextType 属性会被重赋值为一个由 React.createContext() 创建的 Context 对象。这能让你使用 this.context 来消费最近 Context 上的那个值。
 
 ### React.lazy、Suspense 及错误边界（Error boundaries）
@@ -139,7 +144,12 @@ export default React.memo(Child,areEqual)
 
 ### React Hooks
 
+> 这篇文章关于 hooks 写的相当 nice > > > `https://www.jianshu.com/p/308dc1831c2b`
+
 - useState
   > 参考`https://react.docschina.org/docs/hooks-state.html`
 - useEffect
   > 参考`https://react.docschina.org/docs/hooks-effect.html`
+- Context Hooks
+
+  react 提供了 useContext 这个 hooks 使得在函数组件中使用 context 变得更加方便。
