@@ -1,65 +1,76 @@
-import React, { Component, createContext, lazy, Suspense } from 'react';
-import './App.css';
+import React, { Component, useState, useEffect } from "react";
 
-const About = lazy(() => import(/* webpackChunkName: "about" */'./About.jsx'));
+// class App extends Component {
+//   state = {
+//     count: 0,
+//     size: {
+//       width: document.documentElement.clientWidth,
+//       height: document.documentElement.clientHeight
+//     }
+//   }
+//   onResize = () => {
+//     this.setState({
+//       size: {
+//         width: document.documentElement.clientWidth,
+//         height: document.documentElement.clientHeight
+//       }
+//     })
+//   }
+//   componentDidMount() {
+//     window.addEventListener('resize', this.onResize, false)
+//   }
+//   componentWillUnmount() {
+//     window.removeEventListener('resize', this.onResize, false)
+//   }
+//   componentDidUpdate() {
 
-// ErrorBoundary
-
-// const BatteryContext = createContext(30);
-
-// class Leaf extends Component {
-//   // static contextType = BatteryContext;
+//   }
 //   render() {
-//     // const battery = this.context;
+//     const { count, size } = this.state;
 //     return (
-//       // <BatteryContext.Consumer>
-//       //   {
-//       //     battery => <h1>Battery: {battery}</h1>
-//       //   }
-//       // </BatteryContext.Consumer>
-//       // <h1>Battery: {battery}</h1>
+//       <div>
+//         <button onClick={() => {this.setState({count: count + 1})}}>
+//           Click({count})
+//           Size: {size.width} * {size.height}
+//         </button>
+//       </div>
 //     )
 //   }
 // }
 
-// class Middle extends Component {
-//   render() {
-//     return <Leaf />
-//   }
-// }
-
-class App extends Component {
-  state = {
-    hasError: false
-  }
-  // componentDidCatch() {
-  //   this.setState({
-  //     hasError: true
-  //   })
-  // }
-  static getDerivedStateFromError(){
-    return {
-      hasError: true
-    }
-  }
-  render() {
-    const { hasError } = this.state;
-    if(hasError) {
-      return <div>报错了！！</div>
-    }
-    return (
-      <div>
-        <Suspense fallback={<div>loading</div>}>
-          <About></About>
-        </Suspense>
-      </div>
-      // <BatteryContext.Provider value={60}>
-      //   <Middle />
-      // </BatteryContext.Provider>
-    );
-  }
+function App() {
+  const [count, setCount] = useState(0);
+  const [size, setSize] = useState({
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight
+  });
+  const onResize = () => {
+    setSize({
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight
+    });
+  };
+  useEffect(() => {
+    document.title = count;
+  });
+  useEffect(() => {
+    window.addEventListener("resize", onResize, false);
+    return () => {
+      window.removeEventListener("resize", onResize, false);
+    };
+  }, []);
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setCount(count + 1);
+        }}
+      >
+        Click({count})
+      </button>
+      Size: {size.width} * {size.height}
+    </div>
+  );
 }
-
-
 
 export default App;
