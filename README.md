@@ -150,7 +150,7 @@ export default React.memo(Child,areEqual)
   > 参考`https://react.docschina.org/docs/hooks-state.html`
 - useEffect
   > 参考`https://react.docschina.org/docs/hooks-effect.html`
-- Context Hooks
+- useContext
 
   react 提供了 useContext 这个 hooks 使得在函数组件中使用 context 变得更加方便。
 
@@ -169,3 +169,6 @@ export default React.memo(Child,areEqual)
   - 记住，传入 useMemo 的函数会在渲染期间执行。请不要在这个函数内部执行与渲染无关的操作，诸如副作用这类的操作属于 useEffect 的适用范畴，而不是 useMemo。
 
   - 如果没有提供依赖项数组，useMemo 在每次渲染时都会计算新的值。
+
+- useCallback
+  > useCallback(fn, deps) 相当于 useMemo(() => fn, deps)
