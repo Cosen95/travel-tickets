@@ -209,6 +209,11 @@ export default React.memo(Child,areEqual)
 
 ### fetch
 
+> 参考`https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch`
+
 ### cache API
 
 ### Notification API
+
+- 在页面中开启 notification 通知: `Notification.requestPermission().then(permission => console.log(permission))`
+- 在 seivice worker 中开启通知: `self.registration.showNotification('收到宝宝的一条新通知')`
