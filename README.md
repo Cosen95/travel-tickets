@@ -205,6 +205,8 @@ export default React.memo(Child,areEqual)
 
 ### Service Worker
 
+> 参考`https://developers.google.com/web/fundamentals/primers/service-workers/#top_of_page`
+
 ### Promise
 
 ### fetch
@@ -212,6 +214,8 @@ export default React.memo(Child,areEqual)
 > 参考`https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch`
 
 ### cache API
+
+> 参考`https://developer.mozilla.org/zh-CN/docs/Web/API/Cache`
 
 ### Notification API
 
