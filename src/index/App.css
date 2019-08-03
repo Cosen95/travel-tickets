@@ -5,3 +5,7 @@ header-wrapper {
   top: 0;
   z-index: 2;
 }
+.form {
+  padding: 5px 15px 0;
+  background: #fff;
+}

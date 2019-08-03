@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import "./App.css";
 
@@ -14,29 +15,35 @@ function App(props) {
     window.history.back();
   }, []);
 
-  const handleExchangeFromTo = useCallback(() => {
-    dispatch(exchangeFromTo());
-  }, []);
+  // const handleExchangeFromTo = useCallback(() => {
+  //   dispatch(exchangeFromTo());
+  // }, []);
 
-  const handleShowCitySelector = useCallback(val => {
-    dispatch(showCitySelector(val));
-  });
+  // const handleShowCitySelector = useCallback(val => {
+  //   dispatch(showCitySelector(val));
+  // });
+
+  const fromToCbs = useMemo(() => {
+    return bindActionCreators(
+      {
+        exchangeFromTo,
+        showCitySelector
+      },
+      dispatch
+    );
+  }, []);
 
   return (
     <div>
       <div className="header-wrapper">
         <Header title="火车票" onBack={onBack} />
       </div>
-
-      <Journey
-        from={from}
-        to={to}
-        exchangeFromTo={handleExchangeFromTo}
-        showCitySelector={handleShowCitySelector}
-      />
-      <DepartDate />
-      <HighSpeed />
-      <Submit />
+      <form action="" className="form">
+        <Journey from={from} to={to} {...fromToCbs} />
+        <DepartDate />
+        <HighSpeed />
+        <Submit />
+      </form>
     </div>
   );
 }
