@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import "./App.css";
 
@@ -9,9 +9,16 @@ import Journey from "./components//Journey.jsx";
 import Submit from "./components/Submit.jsx";
 
 function App(props) {
+  const onBack = useCallback(() => {
+    window.history.back();
+  }, []);
+
   return (
     <div>
-      <Header />
+      <div className="header-wrapper">
+        <Header title="火车票" onBack={onBack} />
+      </div>
+
       <Journey />
       <DepartDate />
       <HighSpeed />
@@ -21,6 +28,10 @@ function App(props) {
 }
 
 export default connect(
-  function mapStateToProps(state) {},
-  function mapDispatchToProps(dispatch) {}
+  function mapStateToProps(state) {
+    return {};
+  },
+  function mapDispatchToProps(dispatch) {
+    return {};
+  }
 )(App);
