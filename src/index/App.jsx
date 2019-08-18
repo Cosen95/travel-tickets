@@ -23,7 +23,8 @@ function App(props) {
     dispatch,
     isCitySelectorVisible,
     cityData,
-    isLoadingCityData
+    isLoadingCityData,
+    departDate
   } = props;
   const onBack = useCallback(() => {
     window.history.back();
@@ -65,7 +66,7 @@ function App(props) {
       </div>
       <form action="" className="form">
         <Journey from={from} to={to} {...fromToCbs} />
-        <DepartDate />
+        <DepartDate time={departDate} />
         <HighSpeed />
         <Submit />
       </form>
