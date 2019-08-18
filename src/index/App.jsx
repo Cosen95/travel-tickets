@@ -10,6 +10,7 @@ import Journey from "./components//Journey";
 import Submit from "./components/Submit";
 import CitySelector from "../components/CitySelector";
 import DateSelector from "../components/DateSelector";
+import { timeHandler } from "../utils/date";
 
 import {
   exchangeFromTo,
@@ -18,7 +19,8 @@ import {
   fetchCityData,
   setSelectedCity,
   showDateSelector,
-  hideDateSelector
+  hideDateSelector,
+  setDepartDate
 } from "./actions";
 function App(props) {
   const {
@@ -82,6 +84,19 @@ function App(props) {
     );
   }, []);
 
+  const onSelectDate = useCallback(day => {
+    if (!day) {
+      return;
+    }
+
+    if (day < timeHandler()) {
+      return;
+    }
+
+    dispatch(setDepartDate(day));
+    dispatch(hideDateSelector());
+  }, []);
+
   return (
     <div>
       <div className="header-wrapper">
@@ -99,7 +114,11 @@ function App(props) {
         isLoading={isLoadingCityData}
         {...citySelectorCbs}
       />
-      <DateSelector show={isDateSelectorVisible} {...dateSelectorCbs} />
+      <DateSelector
+        show={isDateSelectorVisible}
+        {...dateSelectorCbs}
+        onSelect={onSelectDate}
+      />
     </div>
   );
 }
