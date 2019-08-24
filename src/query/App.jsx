@@ -19,7 +19,9 @@ import {
   setTicketTypes,
   setTrainTypes,
   setDepartStations,
-  setArriveStations
+  setArriveStations,
+  prevDate,
+  nextDate
 } from "./actions";
 
 function App(props) {
@@ -91,11 +93,11 @@ function App(props) {
             }
           }
         } = res;
-        dispatch(setTrainList(trains)),
-          dispatch(setTicketTypes(ticketType)),
-          dispatch(setTrainTypes(trainType)),
-          dispatch(setDepartStations(depStation)),
-          dispatch(setArriveStations(arrStation));
+        dispatch(setTrainList(trains));
+        dispatch(setTicketTypes(ticketType));
+        dispatch(setTrainTypes(trainType));
+        dispatch(setDepartStations(depStation));
+        dispatch(setArriveStations(arrStation));
       });
   }, [
     from,
@@ -119,12 +121,37 @@ function App(props) {
     window.history.back();
   }, []);
 
+  const isPrevDisabled = timeHandler(departDate) <= timeHandler();
+  const isNextDisabled =
+    timeHandler(departDate) - timeHandler() > 20 * 86400 * 1000;
+  const prev = useCallback(() => {
+    if (isPrevDisabled) {
+      return;
+    }
+    dispatch(prevDate());
+  }, [isPrevDisabled]);
+
+  const next = useCallback(() => {
+    if (isNextDisabled) {
+      return;
+    }
+    dispatch(nextDate());
+  }, [isNextDisabled]);
   return (
     <div>
       <div className="header-wrapper">
         <Header title={`${from} ⇀ ${to}`} onBack={onBack} />
       </div>
-      <Nav />
+      <div className="nav-wrapper">
+        <Nav
+          date={departDate}
+          isPrevDisabled={isPrevDisabled}
+          isNextDisabled={isNextDisabled}
+          prev={prev}
+          next={next}
+        />
+      </div>
+
       <List />
       <Bottom />
     </div>
