@@ -42,7 +42,8 @@ function App(props) {
     departTimeStart,
     departTimeEnd,
     arriveTimeStart,
-    arriveTimeEnd
+    arriveTimeEnd,
+    trainList
   } = props;
 
   useEffect(() => {
@@ -144,7 +145,7 @@ function App(props) {
         />
       </div>
 
-      <List />
+      <List list={trainList} />
       <Bottom />
     </div>
   );
