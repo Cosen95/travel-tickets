@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { timeHandler } from "../utils/date";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
+import useNav from "../components/useNav";
 import List from "./components/List";
 import Bottom from "./components/Bottom";
 import {
@@ -121,22 +122,13 @@ function App(props) {
     window.history.back();
   }, []);
 
-  const isPrevDisabled = timeHandler(departDate) <= timeHandler();
-  const isNextDisabled =
-    timeHandler(departDate) - timeHandler() > 20 * 86400 * 1000;
-  const prev = useCallback(() => {
-    if (isPrevDisabled) {
-      return;
-    }
-    dispatch(prevDate());
-  }, [isPrevDisabled]);
+  const { isPrevDisabled, isNextDisabled, prev, next } = useNav(
+    departDate,
+    dispatch,
+    prevDate,
+    nextDate
+  );
 
-  const next = useCallback(() => {
-    if (isNextDisabled) {
-      return;
-    }
-    dispatch(nextDate());
-  }, [isNextDisabled]);
   return (
     <div>
       <div className="header-wrapper">
