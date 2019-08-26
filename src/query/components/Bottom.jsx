@@ -4,6 +4,40 @@ import classnames from "classnames";
 import { ORDER_DEPART } from "../constant";
 import "./Bottom.css";
 
+const Filter = memo(function Filter(props) {
+  const { name, checked } = props;
+  return <li className={classnames({ checked })}>{name}</li>;
+});
+Filter.propTypes = {
+  name: PropTypes.string.isRequired,
+  checked: PropTypes.bool.isRequired
+};
+
+const Option = memo(function Option(props) {
+  const { title, options, checkedMap } = props;
+  return (
+    <div className="option">
+      <h3>{title}</h3>
+      <ul>
+        {options.map(option => {
+          return (
+            <Filter
+              key={option.value}
+              {...option}
+              checked={option.value in checkedMap}
+            />
+          );
+        })}
+      </ul>
+    </div>
+  );
+});
+Option.propTypes = {
+  title: PropTypes.string.isRequired,
+  options: PropTypes.array.isRequired,
+  checkedMap: PropTypes.object.isRequired
+};
+
 const BottomModal = memo(function BottomModal(props) {
   const {
     toggleIsFiltersVisible,
@@ -29,6 +63,28 @@ const BottomModal = memo(function BottomModal(props) {
     arriveTimeEnd
   } = props;
 
+  const optionGroup = [
+    {
+      title: "坐席类型",
+      options: ticketTypes,
+      checkedMap: checkedTicketTypes
+    },
+    {
+      title: "车次类型",
+      options: trainTypes,
+      checkedMap: checkedTrainTypes
+    },
+    {
+      title: "出发车站",
+      options: departStations,
+      checkedMap: checkedDepartStations
+    },
+    {
+      title: "到达车站",
+      options: arriveStations,
+      checkedMap: checkedArriveStations
+    }
+  ];
   return (
     <div className="bottom-modal">
       <div className="bottom-dialog">
@@ -37,7 +93,11 @@ const BottomModal = memo(function BottomModal(props) {
             <span className="reset">重置</span>
             <span className="ok">确定</span>
           </div>
-          <div className="options"></div>
+          <div className="options">
+            {optionGroup.map(group => (
+              <Option {...group} key={group.title} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
