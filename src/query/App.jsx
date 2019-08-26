@@ -27,7 +27,15 @@ import {
   toggleOrderType,
   toggleHighSpeed,
   toggleOnlyTickets,
-  toggleIsFiltersVisible
+  toggleIsFiltersVisible,
+  setCheckedTicketTypes,
+  setCheckedTrainTypes,
+  setCheckedDepartStations,
+  setCheckedArriveStations,
+  setDepartTimeStart,
+  setDepartTimeEnd,
+  setArriveTimeStart,
+  setArriveTimeEnd
 } from "./actions";
 
 function App(props) {
@@ -45,6 +53,10 @@ function App(props) {
     checkedTrainTypes,
     checkedDepartStations,
     checkedArriveStations,
+    ticketTypes,
+    trainTypes,
+    departStations,
+    arriveStations,
     departTimeStart,
     departTimeEnd,
     arriveTimeStart,
@@ -142,7 +154,15 @@ function App(props) {
         toggleOrderType,
         toggleHighSpeed,
         toggleOnlyTickets,
-        toggleIsFiltersVisible
+        toggleIsFiltersVisible,
+        setCheckedTicketTypes,
+        setCheckedTrainTypes,
+        setCheckedDepartStations,
+        setCheckedArriveStations,
+        setDepartTimeStart,
+        setDepartTimeEnd,
+        setArriveTimeStart,
+        setArriveTimeEnd
       },
       dispatch
     );
@@ -168,6 +188,18 @@ function App(props) {
         orderType={orderType}
         onlyTickets={onlyTickets}
         isFiltersVisible={isFiltersVisible}
+        checkedTicketTypes={checkedTicketTypes}
+        checkedTrainTypes={checkedTrainTypes}
+        checkedDepartStations={checkedDepartStations}
+        checkedArriveStations={checkedArriveStations}
+        ticketTypes={ticketTypes}
+        trainTypes={trainTypes}
+        departStations={departStations}
+        arriveStations={arriveStations}
+        departTimeStart={departTimeStart}
+        departTimeEnd={departTimeEnd}
+        arriveTimeStart={arriveTimeStart}
+        arriveTimeEnd={arriveTimeEnd}
         {...bottomCbs}
       />
     </div>

@@ -1,8 +1,71 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import { ORDER_DEPART } from "../constant";
 import "./Bottom.css";
+
+const BottomModal = memo(function BottomModal(props) {
+  const {
+    toggleIsFiltersVisible,
+    setCheckedTicketTypes,
+    setCheckedTrainTypes,
+    setCheckedDepartStations,
+    setCheckedArriveStations,
+    setDepartTimeStart,
+    setDepartTimeEnd,
+    setArriveTimeStart,
+    setArriveTimeEnd,
+    checkedTicketTypes,
+    checkedTrainTypes,
+    checkedDepartStations,
+    checkedArriveStations,
+    ticketTypes,
+    trainTypes,
+    departStations,
+    arriveStations,
+    departTimeStart,
+    departTimeEnd,
+    arriveTimeStart,
+    arriveTimeEnd
+  } = props;
+
+  return (
+    <div className="bottom-modal">
+      <div className="bottom-dialog">
+        <div className="bottom-dialog-content">
+          <div className="title">
+            <span className="reset">重置</span>
+            <span className="ok">确定</span>
+          </div>
+          <div className="options"></div>
+        </div>
+      </div>
+    </div>
+  );
+});
+BottomModal.propTypes = {
+  toggleIsFiltersVisible: PropTypes.func.isRequired,
+  setCheckedTicketTypes: PropTypes.func.isRequired,
+  setCheckedTrainTypes: PropTypes.func.isRequired,
+  setCheckedDepartStations: PropTypes.func.isRequired,
+  setCheckedArriveStations: PropTypes.func.isRequired,
+  setDepartTimeStart: PropTypes.func.isRequired,
+  setDepartTimeEnd: PropTypes.func.isRequired,
+  setArriveTimeStart: PropTypes.func.isRequired,
+  setArriveTimeEnd: PropTypes.func.isRequired,
+  checkedTicketTypes: PropTypes.object.isRequired,
+  checkedTrainTypes: PropTypes.object.isRequired,
+  checkedDepartStations: PropTypes.object.isRequired,
+  checkedArriveStations: PropTypes.object.isRequired,
+  ticketTypes: PropTypes.array.isRequired,
+  trainTypes: PropTypes.array.isRequired,
+  departStations: PropTypes.array.isRequired,
+  arriveStations: PropTypes.array.isRequired,
+  departTimeStart: PropTypes.number.isRequired,
+  departTimeEnd: PropTypes.number.isRequired,
+  arriveTimeStart: PropTypes.number.isRequired,
+  arriveTimeEnd: PropTypes.number.isRequired
+};
 
 export default function Bottom(props) {
   const {
@@ -13,7 +76,27 @@ export default function Bottom(props) {
     toggleOrderType,
     toggleHighSpeed,
     toggleOnlyTickets,
-    toggleIsFiltersVisible
+    toggleIsFiltersVisible,
+    setCheckedTicketTypes,
+    setCheckedTrainTypes,
+    setCheckedDepartStations,
+    setCheckedArriveStations,
+    setDepartTimeStart,
+    setDepartTimeEnd,
+    setArriveTimeStart,
+    setArriveTimeEnd,
+    checkedTicketTypes,
+    checkedTrainTypes,
+    checkedDepartStations,
+    checkedArriveStations,
+    ticketTypes,
+    trainTypes,
+    departStations,
+    arriveStations,
+    departTimeStart,
+    departTimeEnd,
+    arriveTimeStart,
+    arriveTimeEnd
   } = props;
   return (
     <div className="bottom">
@@ -44,6 +127,31 @@ export default function Bottom(props) {
           综合筛选
         </span>
       </div>
+      {isFiltersVisible && (
+        <BottomModal
+          toggleIsFiltersVisible={toggleIsFiltersVisible}
+          setCheckedTicketTypes={setCheckedTicketTypes}
+          setCheckedTrainTypes={setCheckedTrainTypes}
+          setCheckedDepartStations={setCheckedDepartStations}
+          setCheckedArriveStations={setCheckedArriveStations}
+          setDepartTimeStart={setDepartTimeStart}
+          setDepartTimeEnd={setDepartTimeEnd}
+          setArriveTimeStart={setArriveTimeStart}
+          setArriveTimeEnd={setArriveTimeEnd}
+          checkedTicketTypes={checkedTicketTypes}
+          checkedTrainTypes={checkedTrainTypes}
+          checkedDepartStations={checkedDepartStations}
+          checkedArriveStations={checkedArriveStations}
+          ticketTypes={ticketTypes}
+          trainTypes={trainTypes}
+          departStations={departStations}
+          arriveStations={arriveStations}
+          departTimeStart={departTimeStart}
+          departTimeEnd={departTimeEnd}
+          arriveTimeStart={arriveTimeStart}
+          arriveTimeEnd={arriveTimeEnd}
+        />
+      )}
     </div>
   );
 }
@@ -56,5 +164,25 @@ Bottom.propTypes = {
   toggleOrderType: PropTypes.func.isRequired,
   toggleHighSpeed: PropTypes.func.isRequired,
   toggleOnlyTickets: PropTypes.func.isRequired,
-  toggleIsFiltersVisible: PropTypes.func.isRequired
+  toggleIsFiltersVisible: PropTypes.func.isRequired,
+  setCheckedTicketTypes: PropTypes.func.isRequired,
+  setCheckedTrainTypes: PropTypes.func.isRequired,
+  setCheckedDepartStations: PropTypes.func.isRequired,
+  setCheckedArriveStations: PropTypes.func.isRequired,
+  setDepartTimeStart: PropTypes.func.isRequired,
+  setDepartTimeEnd: PropTypes.func.isRequired,
+  setArriveTimeStart: PropTypes.func.isRequired,
+  setArriveTimeEnd: PropTypes.func.isRequired,
+  checkedTicketTypes: PropTypes.object.isRequired,
+  checkedTrainTypes: PropTypes.object.isRequired,
+  checkedDepartStations: PropTypes.object.isRequired,
+  checkedArriveStations: PropTypes.object.isRequired,
+  ticketTypes: PropTypes.array.isRequired,
+  trainTypes: PropTypes.array.isRequired,
+  departStations: PropTypes.array.isRequired,
+  arriveStations: PropTypes.array.isRequired,
+  departTimeStart: PropTypes.number.isRequired,
+  departTimeEnd: PropTypes.number.isRequired,
+  arriveTimeStart: PropTypes.number.isRequired,
+  arriveTimeEnd: PropTypes.number.isRequired
 };
