@@ -1,12 +1,16 @@
-import React, { memo } from "react";
+import React, { memo, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import { ORDER_DEPART } from "../constant";
 import "./Bottom.css";
 
 const Filter = memo(function Filter(props) {
-  const { name, checked } = props;
-  return <li className={classnames({ checked })}>{name}</li>;
+  const { name, checked, toggle, value } = props;
+  return (
+    <li className={classnames({ checked })} onClick={() => toggle(value)}>
+      {name}
+    </li>
+  );
 });
 Filter.propTypes = {
   name: PropTypes.string.isRequired,
@@ -14,7 +18,21 @@ Filter.propTypes = {
 };
 
 const Option = memo(function Option(props) {
-  const { title, options, checkedMap } = props;
+  const { title, options, checkedMap, update } = props;
+
+  const toggle = useCallback(
+    value => {
+      const newCheckedMap = { ...checkedMap };
+      if (value in checkedMap) {
+        delete newCheckedMap[value];
+      } else {
+        newCheckedMap[value] = true;
+      }
+
+      update(newCheckedMap);
+    },
+    [checkedMap, update]
+  );
   return (
     <div className="option">
       <h3>{title}</h3>
@@ -25,6 +43,7 @@ const Option = memo(function Option(props) {
               key={option.value}
               {...option}
               checked={option.value in checkedMap}
+              toggle={toggle}
             />
           );
         })}
@@ -35,7 +54,8 @@ const Option = memo(function Option(props) {
 Option.propTypes = {
   title: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
-  checkedMap: PropTypes.object.isRequired
+  checkedMap: PropTypes.object.isRequired,
+  update: PropTypes.func.isRequired
 };
 
 const BottomModal = memo(function BottomModal(props) {
@@ -63,26 +83,57 @@ const BottomModal = memo(function BottomModal(props) {
     arriveTimeEnd
   } = props;
 
+  const [localCheckedTicketTypes, setLocalCheckedTicketTypes] = useState(() => {
+    return {
+      ...checkedTicketTypes
+    };
+  });
+
+  const [localCheckedTrainTypes, setLocalCheckedTrainTypes] = useState(() => {
+    return {
+      ...checkedTrainTypes
+    };
+  });
+
+  const [localCheckedDepartStations, setLocalCheckedDepartStations] = useState(
+    () => {
+      return {
+        ...checkedDepartStations
+      };
+    }
+  );
+
+  const [localCheckedArriveStations, setLocalCheckedArriveStations] = useState(
+    () => {
+      return {
+        ...checkedArriveStations
+      };
+    }
+  );
   const optionGroup = [
     {
       title: "坐席类型",
       options: ticketTypes,
-      checkedMap: checkedTicketTypes
+      checkedMap: localCheckedTicketTypes,
+      update: setLocalCheckedTicketTypes
     },
     {
       title: "车次类型",
       options: trainTypes,
-      checkedMap: checkedTrainTypes
+      checkedMap: localCheckedTrainTypes,
+      update: setLocalCheckedTrainTypes
     },
     {
       title: "出发车站",
       options: departStations,
-      checkedMap: checkedDepartStations
+      checkedMap: localCheckedDepartStations,
+      update: setLocalCheckedDepartStations
     },
     {
       title: "到达车站",
       options: arriveStations,
-      checkedMap: checkedArriveStations
+      checkedMap: localCheckedArriveStations,
+      update: setLocalCheckedArriveStations
     }
   ];
   return (
