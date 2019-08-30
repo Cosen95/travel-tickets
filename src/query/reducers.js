@@ -21,7 +21,7 @@ import {
   ACTION_SET_ISFILTERSVISIBLE,
   ACTION_SET_SEARCHPARSED
 } from "./actions";
-import { ORDER_DEPART, ORDER_DURATION } from './constant';
+import { ORDER_DEPART, ORDER_DURATION } from "./constant";
 export default {
   from(state = null, action) {
     const { type, payload } = action;
@@ -58,6 +58,9 @@ export default {
     switch (type) {
       case ACTION_SET_HIGHSPEED:
         return payload;
+      case ACTION_SET_CHECKEDTRAINTYPES:
+        const checkedTrainTypes = payload;
+        return Boolean(checkedTrainTypes[1] && checkedTrainTypes[5]);
       default:
     }
 
@@ -128,6 +131,18 @@ export default {
     switch (type) {
       case ACTION_SET_CHECKEDTRAINTYPES:
         return payload;
+      case ACTION_SET_HIGHSPEED:
+        const highSpeed = payload;
+        const newCheckedTrainTypes = { ...state };
+        if (highSpeed) {
+          newCheckedTrainTypes[1] = true;
+          newCheckedTrainTypes[5] = true;
+        } else {
+          delete newCheckedTrainTypes[1];
+          delete newCheckedTrainTypes[5];
+        }
+
+        return newCheckedTrainTypes;
       default:
     }
 
